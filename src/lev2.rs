@@ -44,7 +44,7 @@ fn lev<'a, 'b>(s: &'a str, t: &'b str) -> usize {
     let t_chars: Vec<char> = t.chars().collect();
     // rect(i, j) is the minimal cost of an edit sequence that turns s[..i] into t[..j]
     let mut rect = MemoMatrix::new(s.chars().count() + 1, t.chars().count() + 1);
-    ed(&mut rect, &s_chars[], &t_chars[])
+    ed(&mut rect, &s_chars[..], &t_chars[..])
 }
 
 fn ed<'a, 'b>(rect: &mut MemoMatrix<usize>, s: &'a [char], t: &'b [char]) -> usize {

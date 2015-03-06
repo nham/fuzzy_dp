@@ -58,7 +58,7 @@ fn fuzzy_sub_dist<'a, 'b>(p: &'a str, t: &'b str) -> usize {
 
     let mut min = usize::MAX;
     for k in 0..(n+1) {
-        let dist = ed_skip(&mut rect, &p_chars[], &t_chars[..k]);
+        let dist = ed_sub(&mut rect, &p_chars[..], &t_chars[..k]);
         if dist < min {
             min = dist;
         }
@@ -67,7 +67,7 @@ fn fuzzy_sub_dist<'a, 'b>(p: &'a str, t: &'b str) -> usize {
     min
 }
 
-fn ed_skip<'a, 'b>(rect: &mut MemoMatrix<usize>, p: &'a [char], t: &'b [char]) -> usize {
+fn ed_sub<'a, 'b>(rect: &mut MemoMatrix<usize>, p: &'a [char], t: &'b [char]) -> usize {
     let (i, j) = (p.len(), t.len());
 
     // check if this has already been computed and use it if so
@@ -84,12 +84,12 @@ fn ed_skip<'a, 'b>(rect: &mut MemoMatrix<usize>, p: &'a [char], t: &'b [char]) -
     } else {
         let (a, b) = (i-1, j-1);
         if p[a] == t[b] {
-            ed_skip(rect, &p[..a], &t[..b])
+            ed_sub(rect, &p[..a], &t[..b])
         } else {
             let v = vec![
-                ed_skip(rect, &p[..a], &t[..b]),
-                ed_skip(rect, &p[..a], t),
-                ed_skip(rect, p, &t[..b])
+                ed_sub(rect, &p[..a], &t[..b]),
+                ed_sub(rect, &p[..a], t),
+                ed_sub(rect, p, &t[..b])
             ];
             v.into_iter().min().unwrap() + 1
         }

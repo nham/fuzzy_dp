@@ -5,7 +5,7 @@ fn main() {
 fn lev<'a, 'b>(s: &'a str, t: &'b str) -> usize {
     let s_chars: Vec<char> = s.chars().collect();
     let t_chars: Vec<char> = t.chars().collect();
-    ed(&s_chars[], &t_chars[])
+    ed(&s_chars[..], &t_chars[..])
 }
 
 fn ed<'a, 'b>(s: &'a [char], t: &'b [char]) -> usize {
